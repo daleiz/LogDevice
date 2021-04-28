@@ -36,7 +36,7 @@ set_target_properties(ldclient_static
   PROPERTIES POSITION_INDEPENDENT_CODE ON
 )
 
-add_dependencies(ldclient rocksdb folly fbthrift)
+add_dependencies(ldclient RocksDB::rocksdb folly fbthrift)
 
 # Tests
 if (${BUILD_TESTS})
@@ -55,7 +55,7 @@ if (${BUILD_TESTS})
     ${LIBGFLAGS_LIBRARY}
   )
 
-  add_dependencies(ldclient_test rocksdb)
+  add_dependencies(ldclient_test RocksDB::rocksdb)
 
   set_target_properties(ldclient_test
     PROPERTIES

@@ -10,13 +10,37 @@ set(_fb303_if_include_prefix "common/fb303/if")
 
 file(MAKE_DIRECTORY ${CMAKE_BINARY_DIR}/${_fb303_if_include_prefix})
 
-ld_thrift_py3_library(
-  "fb303"
-  "FacebookService"
-  ""
-  "${CMAKE_CURRENT_SOURCE_DIR}"
-  "${CMAKE_BINARY_DIR}/${_fb303_if_include_prefix}"
-  "${_fb303_if_include_prefix}"
-)
+## ld_thrift_py3_library(
+##   "fb303"
+##   "FacebookService"
+##   ""
+##   "${CMAKE_CURRENT_SOURCE_DIR}"
+##   "${CMAKE_BINARY_DIR}/${_fb303_if_include_prefix}"
+##   "${_fb303_if_include_prefix}"
+## )
+## 
+## add_dependencies(fb303-cpp2-target fbthrift)
+
+ thrift_library(
+   "fb303"
+   "FacebookService"
+   "cpp2"
+   ""
+   "${CMAKE_CURRENT_SOURCE_DIR}"
+   "${CMAKE_BINARY_DIR}/${_fb303_if_include_prefix}"
+   "${_fb303_if_include_prefix}"
+   THRIFT_INCLUDE_DIRECTORIES "${CMAKE_SOURCE_DIR}/.."
+  )
 
 add_dependencies(fb303-cpp2-target fbthrift)
+
+set_target_properties(
+        fb303-cpp2-obj
+        PROPERTIES POSITION_INDEPENDENT_CODE True
+)
+
+target_link_libraries(
+  fb303-cpp2
+  ${THRIFT_DEPS}
+)
+

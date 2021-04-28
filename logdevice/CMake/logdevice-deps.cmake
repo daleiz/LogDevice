@@ -15,7 +15,8 @@ endif()
 set(_boost_py_component1
 	    python${PYTHON_VERSION_MAJOR})
 set(_boost_py_component2
-	    python-py${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+  # python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+      python39)
 set(_boost_py_component3
 	    python)
 

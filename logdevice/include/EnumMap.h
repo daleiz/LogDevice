@@ -11,6 +11,7 @@
 #include <cassert>
 #include <functional>
 #include <vector>
+#include <string>
 
 namespace facebook { namespace logdevice {
 

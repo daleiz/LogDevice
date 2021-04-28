@@ -37,8 +37,8 @@ endif(NOT CMAKE_BUILD_TYPE)
 
 message(STATUS "Building with \"${CMAKE_BUILD_TYPE}\" build profile.")
 
-enable_testing()
-# gtest_discover_tests was introduced in cmake 3.10
+# enable_testing()
+# # gtest_discover_tests was introduced in cmake 3.10
 if(${CMAKE_VERSION} VERSION_EQUAL "3.10" OR ${CMAKE_VERSION} VERSION_GREATER "3.10")
   include(GoogleTest OPTIONAL RESULT_VARIABLE HAVE_CMAKE_GTEST)
 endif()
@@ -47,8 +47,8 @@ include (logdevice-functions)
 
 include(build-config)
 
-option(BUILD_TESTS "If enabled, compile the tests." ON)
-option(BUILD_SUBMODULES "Build using Git submodules, to fulfill dependencies" ON)
+option(BUILD_TESTS "If enabled, compile the tests." OFF)
+option(BUILD_SUBMODULES "Build using Git submodules, to fulfill dependencies" OFF)
 if(${BUILD_SUBMODULES})
   message("Building with submodules enabled")
   include(build-fmt)
@@ -60,11 +60,11 @@ if(${BUILD_SUBMODULES})
   include(${LOGDEVICE_DIR}/external/fbthrift/ThriftLibrary.cmake)
 else()
   message("Building without submodules")
-  include(build-rocksdb)
+  # include(build-rocksdb)
   # We're using the external rocksdb even though BUILD_SUBMODULES is OFF because
   # we don't want to be build against rocksdb master in legocastle.
-  # find_package(RocksDB CONFIG REQUIRED)
-  # set(ROCKSDB_LIBRARIES RocksDB::rocksdb)
+  find_package(RocksDB CONFIG REQUIRED)
+  set(ROCKSDB_LIBRARIES RocksDB::rocksdb)
   find_package(fmt CONFIG REQUIRED)
   find_package(folly CONFIG REQUIRED)
   set(FOLLY_LIBRARIES Folly::folly)
@@ -102,8 +102,8 @@ include(build-docs)
 include(logdevice-deps)
 
 # GTest Project
-add_subdirectory(${LOGDEVICE_DIR}/external/gtest)
-include_directories(${GTEST_INCLUDE_DIRS} ${GMOCK_INCLUDE_DIRS})
+# add_subdirectory(${LOGDEVICE_DIR}/external/gtest)
+# include_directories(${GTEST_INCLUDE_DIRS} ${GMOCK_INCLUDE_DIRS})
 
 # Flatbuffers Project
 add_subdirectory(${LOGDEVICE_DIR}/external/flatbuffers)
@@ -218,6 +218,6 @@ add_subdirectory(replication_checker)
 if(${BUILD_TESTS})
   add_subdirectory(test)
 endif()
-add_subdirectory(examples)
-add_subdirectory(clients/python)
-add_subdirectory(ops)
+# add_subdirectory(examples)
+# add_subdirectory(clients/python)
+# add_subdirectory(ops)
