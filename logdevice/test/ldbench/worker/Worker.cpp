@@ -33,12 +33,17 @@
 namespace facebook { namespace logdevice { namespace ldbench {
 
 Worker::Worker() : ev_(new EventLoop("ldbench:ev")) {
+  ld_critical("enter worker ctor!");
   if (options.pretend) {
     return;
   }
 
+  ld_critical("ready to make logstoreClientHolder");
   // Use the generic client interfaces
   client_holder_ = std::make_unique<LogStoreClientHolder>();
+
+  ld_critical("make logstoreClientHolder done");
+
   client_holder_->setWorkerCallBack(std::bind(&Worker::onAppendDone,
                                               this,
                                               std::placeholders::_1,
@@ -48,13 +53,16 @@ Worker::Worker() : ev_(new EventLoop("ldbench:ev")) {
                                               std::placeholders::_5));
   ld_check(options.sys_name == "logdevice" || options.sys_name == "kafka");
   if (options.sys_name == "logdevice") {
+    ld_critical("enter sys_name: logdevice");
     if (client_ == nullptr) {
+      ld_critical("ld_client: null");
       // Take client from client_holder_ if we test logdevice
       // This client will be used for the workloads only supporting logdevice
       // Finally, those workloads, as well as this client_, may be removed.
       client_ =
           std::static_pointer_cast<Client>(client_holder_->getRawClient());
       ld_check(client_ != nullptr);
+      ld_critical("ld_client != null");
     }
     // Old stats can still be used in logdevice
     stats_ = std::make_unique<StatsHolder>(
