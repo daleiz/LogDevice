@@ -562,6 +562,7 @@ int WriteWorker::run() {
 void registerWriteWorker() {
   registerWorkerImpl(BENCH_NAME,
                      []() -> std::unique_ptr<Worker> {
+                       ld_critical("call writeWorker!)
                        return std::make_unique<WriteWorker>();
                      },
                      OptionsRestrictions(
