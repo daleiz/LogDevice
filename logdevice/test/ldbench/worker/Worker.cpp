@@ -68,10 +68,13 @@ Worker::Worker() : ev_(new EventLoop("ldbench:ev")) {
     stats_ = std::make_unique<StatsHolder>(
         StatsParams().setIsServer(false).setStatsSet(
             StatsParams::StatsSet::LDBENCH_WORKER));
+
+    ld_critical("make statsHolder done");
     STAT_INCR(stats_.get(), ldbench->workers_started);
     // Register our custom stats.
     static_cast<ClientImpl*>(client_.get())->registerCustomStats(stats_.get());
   }
+  ld_critical("reach end of worker ctor");
 }
 
 Worker::~Worker() = default;
