@@ -5,45 +5,55 @@
 # LICENSE file in the root directory of this source tree.
 
 # Python version can be chosen by specifying e.g.:
-set(LD_PYTHON_VERSION 3.5 CACHE STRING "Python version")
-find_package(PythonInterp ${LD_PYTHON_VERSION} REQUIRED)
-find_package(PythonLibs ${LD_PYTHON_VERSION} REQUIRED)
-if(thriftpy3)
-  find_package(Cython 0.29 REQUIRED)
-endif()
+## set(LD_PYTHON_VERSION 3.5 CACHE STRING "Python version")
+## find_package(PythonInterp ${LD_PYTHON_VERSION} REQUIRED)
+## find_package(PythonLibs ${LD_PYTHON_VERSION} REQUIRED)
+## if(thriftpy3)
+##   find_package(Cython 0.29 REQUIRED)
+## endif()
+## 
+## set(_boost_py_component1
+## 	    python${PYTHON_VERSION_MAJOR})
+## set(_boost_py_component2
+##   # python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
+##       python39)
+## set(_boost_py_component3
+## 	    python)
+## 
+## foreach(_boost_py_component ${_boost_py_component1} ${_boost_py_component2} ${_boost_py_component3})
+##   find_package(Boost 1.55.0 COMPONENTS
+##     context
+##     chrono
+##     date_time
+##     filesystem
+##     program_options
+##     regex
+##     system
+##     thread
+##     ${_boost_py_component})
+## 
+##   string(TOUPPER ${_boost_py_component} _BOOST_PY_COMP)
+##   if(Boost_${_BOOST_PY_COMP}_FOUND)
+##     message(STATUS "Boost Python Component ${_boost_py_component} found")
+##     break()
+##   else()
+##     message(STATUS "Boost Python Component ${_boost_py_component} not found")
+##   endif()
+## endforeach()
+## 
+## if(NOT Boost_${_BOOST_PY_COMP}_FOUND)
+##   message(FATAL_ERROR "Couldn't find any Boost python component. At least one is required, terminating. ${Boost_ERROR_REASON}")
+## endif()
 
-set(_boost_py_component1
-	    python${PYTHON_VERSION_MAJOR})
-set(_boost_py_component2
-  # python${PYTHON_VERSION_MAJOR}${PYTHON_VERSION_MINOR})
-      python39)
-set(_boost_py_component3
-	    python)
-
-foreach(_boost_py_component ${_boost_py_component1} ${_boost_py_component2} ${_boost_py_component3})
-  find_package(Boost 1.55.0 COMPONENTS
-    context
-    chrono
-    date_time
-    filesystem
-    program_options
-    regex
-    system
-    thread
-    ${_boost_py_component})
-
-  string(TOUPPER ${_boost_py_component} _BOOST_PY_COMP)
-  if(Boost_${_BOOST_PY_COMP}_FOUND)
-    message(STATUS "Boost Python Component ${_boost_py_component} found")
-    break()
-  else()
-    message(STATUS "Boost Python Component ${_boost_py_component} not found")
-  endif()
-endforeach()
-
-if(NOT Boost_${_BOOST_PY_COMP}_FOUND)
-  message(FATAL_ERROR "Couldn't find any Boost python component. At least one is required, terminating. ${Boost_ERROR_REASON}")
-endif()
+find_package(Boost 1.55.0 COMPONENTS
+  context
+  chrono
+  date_time
+  filesystem
+  program_options
+  regex
+  system
+  thread)
 
 set(CMAKE_THREAD_PREFER_PTHREAD ON)
 find_package(Libunwind REQUIRED)
@@ -87,21 +97,21 @@ include_directories(${ROCKSDB_INCLUDE_DIRS})
 include_directories(${LIBGFLAGS_INCLUDE_DIR})
 include_directories(${FBTHRIFT_INCLUDE_DIR})
 
-# Figure out where to install the Python library
-# Some packages (e.g. OpenCV) also install to dist-packages (Debian)
-# instead of site-packages. We will use the default as well.
-execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig \
-                      import get_python_lib; \
-                      print(get_python_lib(prefix='', plat_specific=True))"
-                  OUTPUT_VARIABLE _python_dist_path
-                  OUTPUT_STRIP_TRAILING_WHITESPACE)
-# Debian systems will return dist-packages here
-# Other platforms rely on site-packages
-set(_python_major_minor "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
-if("${_python_dist_path}" MATCHES "site-packages")
-    set(_python_dist_path "python${_python_major_minor}/site-packages")
-else() #debian based assumed, install to the dist-packages.
-    set(_python_dist_path "python${_python_major_minor}/dist-packages")
-endif()
-
-set(PYTHON_MODULE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib/${_python_dist_path}")
+## # Figure out where to install the Python library
+## # Some packages (e.g. OpenCV) also install to dist-packages (Debian)
+## # instead of site-packages. We will use the default as well.
+## execute_process(COMMAND ${PYTHON_EXECUTABLE} -c "from distutils.sysconfig \
+##                       import get_python_lib; \
+##                       print(get_python_lib(prefix='', plat_specific=True))"
+##                   OUTPUT_VARIABLE _python_dist_path
+##                   OUTPUT_STRIP_TRAILING_WHITESPACE)
+## # Debian systems will return dist-packages here
+## # Other platforms rely on site-packages
+## set(_python_major_minor "${PYTHON_VERSION_MAJOR}.${PYTHON_VERSION_MINOR}")
+## if("${_python_dist_path}" MATCHES "site-packages")
+##     set(_python_dist_path "python${_python_major_minor}/site-packages")
+## else() #debian based assumed, install to the dist-packages.
+##     set(_python_dist_path "python${_python_major_minor}/dist-packages")
+## endif()
+## 
+## set(PYTHON_MODULE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}/lib/${_python_dist_path}")
