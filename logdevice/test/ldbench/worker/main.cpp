@@ -82,6 +82,7 @@ int main(int argc, char* argv[]) {
   std::unique_ptr<Worker> worker;
   try {
     worker = (it->second.factory)();
+    ld_critical("after assign worker");
   } catch (...) {
     ld_error("Failed to create Worker");
     return 1;
