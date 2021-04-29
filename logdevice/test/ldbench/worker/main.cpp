@@ -76,6 +76,8 @@ int main(int argc, char* argv[]) {
   ld_check(it != worker_factory_map.end());
   ld_check(options.write_bytes_increase_step == 0 ||
            options.write_bytes_increase_factor == 1.0);
+
+  ld_critical("pass ld_check");
   // Create benchmark worker.
   std::unique_ptr<Worker> worker;
   try {
