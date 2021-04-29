@@ -102,8 +102,8 @@ include(build-docs)
 include(logdevice-deps)
 
 # GTest Project
-# add_subdirectory(${LOGDEVICE_DIR}/external/gtest)
-# include_directories(${GTEST_INCLUDE_DIRS} ${GMOCK_INCLUDE_DIRS})
+add_subdirectory(${LOGDEVICE_DIR}/external/gtest)
+include_directories(${GTEST_INCLUDE_DIRS} ${GMOCK_INCLUDE_DIRS})
 
 # Flatbuffers Project
 add_subdirectory(${LOGDEVICE_DIR}/external/flatbuffers)
@@ -218,6 +218,6 @@ add_subdirectory(replication_checker)
 if(${BUILD_TESTS})
   add_subdirectory(test)
 endif()
-# add_subdirectory(examples)
+add_subdirectory(examples)
 # add_subdirectory(clients/python)
 # add_subdirectory(ops)
