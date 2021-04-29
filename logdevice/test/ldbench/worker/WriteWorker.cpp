@@ -440,12 +440,15 @@ void WriteWorker::updateThroughput() {
 }
 
 int WriteWorker::run() {
+  ld_critical("enter worker thread");
   // Get the log set from config.
   std::vector<logid_t> all_logs;
   if (getLogs(all_logs)) {
     ld_error("No logs to append!");
     return 1;
   }
+
+  ld_critical("getLogs done!");
 
   auto logs = options.partition_by == PartitioningMode::LOG
       ? getLogsPartition(all_logs)
