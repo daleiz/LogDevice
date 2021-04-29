@@ -50,3 +50,20 @@ endif()
 ## use vcpkg install rocksdb 
 
 当前使用的版本是 `6.14.6`
+
+### build with cmake
+
+`gcc 9+` or `clang 9+`
+
+
+```bash
+
+mkdir _build
+
+cd _build
+
+cmake -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake ../logdevice
+
+make -j$(nproc)
+
+```
