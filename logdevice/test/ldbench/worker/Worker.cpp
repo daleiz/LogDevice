@@ -71,8 +71,10 @@ Worker::Worker() : ev_(new EventLoop("ldbench:ev")) {
 
     ld_critical("make statsHolder done");
     STAT_INCR(stats_.get(), ldbench->workers_started);
+    ld_critical("STAT_INCR done");
     // Register our custom stats.
     static_cast<ClientImpl*>(client_.get())->registerCustomStats(stats_.get());
+    ld_critical("cast done");
   }
   ld_critical("reach end of worker ctor");
 }
