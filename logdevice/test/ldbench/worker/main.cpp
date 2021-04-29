@@ -42,9 +42,9 @@ static void dump_debug_info(int /* sig */) noexcept {
 }
 
 int main(int argc, char* argv[]) {
-  ld_critical("enter ldbench!")
+  ld_critical("enter ldbench!");
   logdeviceInit();
-  ld_critical("logdevice init done!")
+  ld_critical("logdevice init done!");
 
   // Parse command-line options.
   auto client_settings_impl = std::make_unique<ClientSettingsImpl>();
@@ -54,7 +54,7 @@ int main(int argc, char* argv[]) {
                                              argc,
                                              const_cast<const char**&>(argv),
                                              ss);
-  ld_critical("parse command line done")
+  ld_critical("parse command line done");
   // updating global variable that is accessed from within LogDeviceClient, if
   // the benchmark is for LogDevice.
   client_settings = std::move(client_settings_impl);
@@ -67,11 +67,11 @@ int main(int argc, char* argv[]) {
   // Look up benchmark worker factory by name.
   const auto& worker_factory_map = getWorkerFactoryMap();
 
-  ld_critical("get worker_factory_map done")
+  ld_critical("get worker_factory_map done");
 
   auto it = worker_factory_map.find(options.bench_name);
 
-  ld_critical("find bench done")
+  ld_critical("find bench done");
 
   ld_check(it != worker_factory_map.end());
   ld_check(options.write_bytes_increase_step == 0 ||
@@ -98,9 +98,9 @@ int main(int argc, char* argv[]) {
 
   // Run benchmark worker in a separate thread.
   std::thread thread([&] {
-    ld_critical("worker will run!")
+    ld_critical("worker will run!");
     rv = worker->run();
-    ld_critical("worker done!")
+    ld_critical("worker done!");
     std::unique_lock<std::mutex> lock(mutex);
     done = true;
     cv.notify_all();
