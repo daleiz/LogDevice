@@ -454,6 +454,7 @@ int WriteWorker::run() {
       ? getLogsPartition(all_logs)
       : all_logs;
   if (logs.empty()) {
+    ld_critical("log empty!");
     return 0;
   }
 
