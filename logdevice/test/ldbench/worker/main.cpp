@@ -85,6 +85,8 @@ int main(int argc, char* argv[]) {
     return 1;
   }
 
+  ld_critical("make worker done");
+
   // Register signal handler. Allows benchmark worker to be stopped.
   std::signal(SIGUSR1, stop_worker);
   std::signal(SIGUSR2, dump_debug_info);
