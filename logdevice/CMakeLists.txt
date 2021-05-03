@@ -235,3 +235,9 @@ install(DIRECTORY ${LOGDEVICE_STAGING_DIR}/usr/local/lib
 install(DIRECTORY ${LOGDEVICE_STAGING_DIR}/usr/local/include
   DESTINATION ${CMAKE_INSTALL_PREFIX}  
 )
+
+set(CPACK_GENERATOR "DEB")
+set(CPACK_DEBIAN_PACKAGE_MAINTAINER "wb") # required
+
+include(CPack)
+
