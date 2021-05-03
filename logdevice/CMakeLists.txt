@@ -224,6 +224,6 @@ add_subdirectory(ops/py_extensions/admin_command_client)
 # add_subdirectory(ops)
 add_subdirectory(test/ldbench/worker)
 
-install(DIRECTORY ${LOGDEVICE_STAGING_DIR}  
+install(DIRECTORY ${LOGDEVICE_STAGING_DIR}/usr  
   DESTINATION ${CMAKE_INSTALL_PREFIX}  
 )
