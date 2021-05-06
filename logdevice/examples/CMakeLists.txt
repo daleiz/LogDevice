@@ -92,3 +92,39 @@ target_link_libraries(ldbuffwrite
 
 add_custom_target(examples)
 add_dependencies(examples ldcat ldtail ldtailasync ldtrim ldwrite ldbuffwrite)
+
+install(TARGETS ldcat 
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ldtail
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ldtailasync
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ldtrim 
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ldwrite 
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ldbuffwrite
+  COMPONENT runtime
+  DESTINATION bin
+)
+
+install(TARGETS ld-dev-cluster
+  COMPONENT runtime
+  DESTINATION bin
+)
+
