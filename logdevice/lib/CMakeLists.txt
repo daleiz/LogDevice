@@ -79,8 +79,8 @@ endif() # ${BUILD_TESTS}
 install(DIRECTORY ${LOGDEVICE_CLIENT_HEADER_DIR}/
   COMPONENT devel
   DESTINATION
-  include/logdevice
-  FILES_MATCHING PATTERN "*.h"
+  include/logdevice/include
+  # FILES_MATCHING PATTERN "*.h"
 )
 
 install(TARGETS ldclient
@@ -92,15 +92,15 @@ install(TARGETS ldclient
 # when installing to /usr/lib, it will already be there, so no specific
 # config required. But for /usr/local or a custom location we would
 # need to add this to the library search paths
-if(NOT CMAKE_INSTALL_PREFIX STREQUAL "/usr")
-    install(CODE "
-    exec_program(\"id -u\" OUTPUT_VARIABLE _current_uid)
-    if (_current_uid EQUAL 0)
-      file(WRITE \"/etc/ld.so.conf.d/logdevice.conf\"
-        \"${CMAKE_INSTALL_PREFIX}/lib\")
-      execute_process(COMMAND \"ldconfig\")
-    else()
-      message(\"Configuration of library path skipped, as root permission\"
-      \" required. Please configure manually.\")
-    endif()")
-endif()
+# if(NOT CMAKE_INSTALL_PREFIX STREQUAL "/usr")
+#     install(CODE "
+#     exec_program(\"id -u\" OUTPUT_VARIABLE _current_uid)
+#     if (_current_uid EQUAL 0)
+#       file(WRITE \"/etc/ld.so.conf.d/logdevice.conf\"
+#         \"${CMAKE_INSTALL_PREFIX}/lib\")
+#       execute_process(COMMAND \"ldconfig\")
+#     else()
+#       message(\"Configuration of library path skipped, as root permission\"
+#       \" required. Please configure manually.\")
+#     endif()")
+# endif()
